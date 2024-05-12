@@ -25,9 +25,7 @@ jobs:
         run: npm install
 
       - name: Build Docs App
-        run: npm run build --prefix apps/docs
+        run: turbo run build --filter docs
 
       - name: Build Blog App
         run: turbo run build --filter blog
-
-      # You can add more steps here like running tests, linting, etc.
