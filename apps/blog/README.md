@@ -56,10 +56,10 @@ A quick look at the top-level files and directories you'll see in a typical Gats
     ├── node_modules
     ├── src
     ├── .gitignore
-    ├── gatsby-browser.js
-    ├── gatsby-config.js
-    ├── gatsby-node.js
-    ├── gatsby-ssr.js
+    ├── gatsby-browser.ts
+    ├── gatsby-config.ts
+    ├── gatsby-node.ts
+    ├── gatsby-ssr.ts
     ├── LICENSE
     ├── package.json
     └── README.md

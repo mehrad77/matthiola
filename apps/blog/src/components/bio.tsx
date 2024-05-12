@@ -46,7 +46,7 @@ const Bio: React.FC = () => {
     }
   `);
 
-  // Set these values by editing "siteMetadata" in gatsby-config.js
+  // Set these values by editing "siteMetadata" in gatsby-config.ts
   const author = data.site.siteMetadata?.author;
   const social = data.site.siteMetadata?.social;
 
