@@ -1,31 +1,42 @@
 name: Build Apps
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
-    branches:
-      - main
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
   build:
+    name: Build and Test
+    timeout-minutes: 15
     runs-on: ubuntu-latest
+    # To use Remote Caching, uncomment the next lines and follow the steps below.
+    # env:
+    #  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+    #  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - name: Check out code
+        uses: actions/checkout@v4
         with:
-          node-version: "18"
+          fetch-depth: 2
 
-      - name: Install Dependencies
-        run: npm install
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
 
-      - name: Build Docs App
-        run: turbo run build --filter docs
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
 
-      - name: Build Blog App
-        run: turbo run build --filter blog
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      # - name: Test
+      #   run: pnpm test
