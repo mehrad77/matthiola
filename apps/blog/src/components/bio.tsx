@@ -47,30 +47,30 @@ const Bio: React.FC = () => {
   `);
 
   // Set these values by editing "siteMetadata" in gatsby-config.ts
-  const author = data.site.siteMetadata?.author;
-  const social = data.site.siteMetadata?.social;
+  const author = data.site.siteMetadata.author;
+  const social = data.site.siteMetadata.social;
 
   return (
     <div className="bio">
       <StaticImage
-        className="bio-avatar"
-        layout="fixed"
-        formats={["auto", "webp", "avif"]}
-        src="../images/profile-pic.png"
-        width={50}
-        height={50}
-        quality={95}
         alt="Profile picture"
+        className="bio-avatar"
+        formats={["auto", "webp", "avif"]}
+        height={50}
+        layout="fixed"
+        quality={95}
+        src="../images/profile-pic.jpg"
+        width={50}
       />
-      {author?.name && (
+      {author?.name ? (
         <p>
-          Written by <strong>{author.name}</strong> {author?.summary || null}
+          Written by <strong>{author.name}</strong> {author.summary || null}
           {` `}
           <a href={`https://twitter.com/${social?.twitter || ``}`}>
             You should follow them on Twitter
           </a>
         </p>
-      )}
+      ) : null}
     </div>
   );
 };

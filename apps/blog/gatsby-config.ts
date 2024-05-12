@@ -1,4 +1,3 @@
-/* eslint-disable eslint-comments/require-description to jumpstart the project */ 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -12,15 +11,15 @@ import type { GatsbyConfig } from "gatsby";
  */
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Shab Boo`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Mehrad Rousta`,
+      summary: `Who dreams, lives, loves, learns, laughs, and creates.`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
+    description: `A place to write and keep my stuff.`,
     siteUrl: `https://shab.boo`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `mehrad4U`,
     },
   },
   graphqlTypegen: true,
@@ -94,11 +93,14 @@ const config: GatsbyConfig = {
               };
             }) => {
               return allMarkdownRemark.nodes.map(node => {
-                return { ...node.frontmatter, description: node.excerpt,
+                return {
+                  ...node.frontmatter,
+                  description: node.excerpt,
                   date: node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + node.fields.slug,
                   guid: site.siteMetadata.siteUrl + node.fields.slug,
-                  custom_elements: [{ "content:encoded": node.html }],};
+                  custom_elements: [{ "content:encoded": node.html }],
+                };
               });
             },
             query: `{
@@ -117,7 +119,7 @@ const config: GatsbyConfig = {
               }
             }`,
             output: "/rss.xml",
-            title: "Gatsby Starter Blog RSS Feed",
+            title: "Shab Boo RSS Feed",
           },
         ],
       },
@@ -125,8 +127,8 @@ const config: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `Gatsby`,
+        name: `Shab Boo`,
+        short_name: `Shab.Boo`,
         start_url: `/`,
         background_color: `#ffffff`,
         // This will impact how browsers show your PWA/website
