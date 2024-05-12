@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
@@ -35,17 +37,35 @@ const Seo: React.FC<SeoProps> = ({ description, title, children }) => {
   return (
     <>
       <title>{defaultTitle ? `${title} | ${defaultTitle}` : title}</title>
-      <meta name="description" content={metaDescription} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={metaDescription} />
-      <meta property="og:type" content="website" />
-      <meta name="twitter:card" content="summary" />
+      <meta content={metaDescription} name="description" />
+      <meta content={title} property="og:title" />
+      <meta content={metaDescription} property="og:description" />
+      <meta content="website" property="og:type" />
+      <meta content="summary" name="twitter:card" />
       <meta
-        name="twitter:creator"
         content={site.siteMetadata?.social?.twitter || ""}
+        name="twitter:creator"
       />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={metaDescription} />
+      <meta content={title} name="twitter:title" />
+      <meta content={metaDescription} name="twitter:description" />
+      <link
+        href="/apple-touch-icon.png"
+        rel="apple-touch-icon"
+        sizes="180x180"
+      />
+      <link
+        href="/favicon-32x32.png"
+        rel="icon"
+        sizes="32x32"
+        type="image/png"
+      />
+      <link
+        href="/favicon-16x16.png"
+        rel="icon"
+        sizes="16x16"
+        type="image/png"
+      />
+      <link href="/site.webmanifest" rel="manifest" />
       {children}
     </>
   );

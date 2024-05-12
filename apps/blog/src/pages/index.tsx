@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from "react";
 import { Link, graphql } from "gatsby";
 import { Button } from "@repo/ui/button";
-
 import Bio from "../components/bio";
 import Layout from "../components/layout";
 import Seo from "../components/seo";
@@ -16,9 +19,9 @@ const BlogIndex = ({ data, location }: Record<string, any>) => {
         <Bio />
         <Button />
         <p>
-          No blog posts found. Add markdown posts to "content/blog" (or the
-          directory you specified for the "gatsby-source-filesystem" plugin in
-          gatsby-config.ts).
+          No blog posts found. Add markdown posts to &ldquo;content/blog&rdquo;
+          (or the directory you specified for the
+          &ldquo;gatsby-source-filesystem&rdquo; plugin in gatsby-config.ts).
         </p>
       </Layout>
     );
@@ -29,7 +32,7 @@ const BlogIndex = ({ data, location }: Record<string, any>) => {
       <Bio />
       <Button />
       <ol style={{ listStyle: `none` }}>
-        {posts.map((post: any) => {
+        {posts?.map((post: any) => {
           const title = post.frontmatter.title || post.fields.slug;
 
           return (
