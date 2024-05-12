@@ -1,15 +1,31 @@
-import * as React from "react"
-import { Link, graphql } from "gatsby"
+import * as React from "react";
+import { Link, graphql } from "gatsby";
 
-import Bio from "../components/bio"
-import Layout from "../components/layout"
-import Seo from "../components/seo"
+import Bio from "../components/bio";
+import Layout from "../components/layout";
+import Seo from "../components/seo";
 
-const BlogPostTemplate = ({
+interface BlogPostTemplateProps {
+  data: {
+    previous: any;
+    next: any;
+    site: any;
+    markdownRemark: {
+      frontmatter: {
+        title: string;
+        date: string;
+      };
+      html: string;
+    };
+  };
+  location: any;
+}
+
+const BlogPostTemplate: React.FC<BlogPostTemplateProps> = ({
   data: { previous, next, site, markdownRemark: post },
   location,
 }) => {
-  const siteTitle = site.siteMetadata?.title || `Title`
+  const siteTitle: string = site.siteMetadata?.title || `Title`;
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -58,19 +74,33 @@ const BlogPostTemplate = ({
         </ul>
       </nav>
     </Layout>
-  )
+  );
+};
+
+interface HeadProps {
+  data: {
+    markdownRemark: {
+      frontmatter: {
+        title: string;
+        description: string;
+      };
+      excerpt: string;
+    };
+  };
 }
 
-export const Head = ({ data: { markdownRemark: post } }) => {
+export const Head: React.FC<HeadProps> = ({
+  data: { markdownRemark: post },
+}) => {
   return (
     <Seo
       title={post.frontmatter.title}
       description={post.frontmatter.description || post.excerpt}
     />
-  )
-}
+  );
+};
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostBySlug(
@@ -110,4 +140,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
