@@ -3,7 +3,7 @@
 import path from "node:path";
 import type {
   GatsbyNode,
-  Actions,
+  // Actions,
   CreateNodeArgs,
   CreatePagesArgs,
   CreateSchemaCustomizationArgs,
