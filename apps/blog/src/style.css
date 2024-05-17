@@ -294,23 +294,29 @@ header#header {
   }
   .chip {
     @apply text-sm font-medium;
-    &.child-chip {
-      @apply px-2.5 py-1;
-      &.child-chip-start {
-        @apply rounded-full rounded-e;
-      }
-      &.child-chip-middle {
-      }
-      &.child-chip-end {
-        @apply me-2 rounded-full rounded-s;
-      }
-    }
-    &.black-chip {
-      @apply bg-neutral-800 text-neutral-100;
-    }
-    &.parent-chip {
-      @apply ms-2 ps-2 pe-0 py-2;
-    }
+  }
+
+  .child-chip {
+    @apply px-2.5 py-1;
+  }
+
+  .child-chip-start {
+    @apply rounded-full rounded-e;
+  }
+
+  .child-chip-middle {
+  }
+  
+  .child-chip-end {
+    @apply me-2 rounded-full rounded-s;
+  }
+
+  .black-chip {
+    @apply bg-neutral-800 text-neutral-100;
+  }
+
+  .parent-chip {
+    @apply ms-2 ps-2 pe-0 py-2;
   }
 }
 
