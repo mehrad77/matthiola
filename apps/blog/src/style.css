@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* CSS Custom Properties Definitions */
 
 :root {
@@ -53,7 +57,7 @@
   --fontSize-6: 2.488rem;
   --fontSize-7: 2.986rem;
   --color-primary: #005b99;
-  --color-text: #2e353f;
+  --color-text: #3d3e40;
   --color-text-light: #4f5969;
   --color-heading: #1a202c;
   --color-heading-black: black;
@@ -79,6 +83,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--fontSize-1);
   color: var(--color-text);
+  background-color: #f0f0f0;
 }
 
 footer {
@@ -92,18 +97,19 @@ hr {
 }
 
 /* Heading */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
-  margin-top: var(--spacing-12);
-  margin-bottom: var(--spacing-6);
-  line-height: var(--lineHeight-tight);
-  letter-spacing: -0.025em;
+main {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    margin-top: var(--spacing-12);
+    margin-bottom: var(--spacing-6);
+    line-height: var(--lineHeight-tight);
+    letter-spacing: -0.025em;
+  }
 }
 
 h2,
@@ -156,100 +162,167 @@ h6 > a {
 }
 
 /* Prose */
+main {
+  p {
+    line-height: var(--lineHeight-relaxed);
+    --baseline-multiplier: 0.179;
+    --x-height-multiplier: 0.35;
+    margin: var(--spacing-0) var(--spacing-0) var(--spacing-8) var(--spacing-0);
+    padding: var(--spacing-0);
+  }
 
-p {
-  line-height: var(--lineHeight-relaxed);
-  --baseline-multiplier: 0.179;
-  --x-height-multiplier: 0.35;
-  margin: var(--spacing-0) var(--spacing-0) var(--spacing-8) var(--spacing-0);
-  padding: var(--spacing-0);
-}
+  ul,
+  ol {
+    margin-left: var(--spacing-0);
+    margin-right: var(--spacing-0);
+    padding: var(--spacing-0);
+    margin-bottom: var(--spacing-8);
+    list-style-position: outside;
+    list-style-image: none;
+  }
 
-ul,
-ol {
-  margin-left: var(--spacing-0);
-  margin-right: var(--spacing-0);
-  padding: var(--spacing-0);
-  margin-bottom: var(--spacing-8);
-  list-style-position: outside;
-  list-style-image: none;
-}
+  ul li,
+  ol li {
+    padding-left: var(--spacing-0);
+    margin-bottom: calc(var(--spacing-8) / 2);
+  }
 
-ul li,
-ol li {
-  padding-left: var(--spacing-0);
-  margin-bottom: calc(var(--spacing-8) / 2);
-}
+  li > p {
+    margin-bottom: calc(var(--spacing-8) / 2);
+  }
 
-li > p {
-  margin-bottom: calc(var(--spacing-8) / 2);
-}
+  li *:last-child {
+    margin-bottom: var(--spacing-0);
+  }
 
-li *:last-child {
-  margin-bottom: var(--spacing-0);
-}
+  li > ul {
+    margin-left: var(--spacing-8);
+    margin-top: calc(var(--spacing-8) / 2);
+  }
 
-li > ul {
-  margin-left: var(--spacing-8);
-  margin-top: calc(var(--spacing-8) / 2);
-}
+  blockquote {
+    color: var(--color-text-light);
+    margin-left: calc(-1 * var(--spacing-6));
+    margin-right: var(--spacing-8);
+    padding: var(--spacing-0) var(--spacing-0) var(--spacing-0) var(--spacing-6);
+    border-left: var(--spacing-1) solid var(--color-primary);
+    font-size: var(--fontSize-2);
+    font-style: italic;
+    margin-bottom: var(--spacing-8);
+  }
 
-blockquote {
-  color: var(--color-text-light);
-  margin-left: calc(-1 * var(--spacing-6));
-  margin-right: var(--spacing-8);
-  padding: var(--spacing-0) var(--spacing-0) var(--spacing-0) var(--spacing-6);
-  border-left: var(--spacing-1) solid var(--color-primary);
-  font-size: var(--fontSize-2);
-  font-style: italic;
-  margin-bottom: var(--spacing-8);
-}
+  blockquote > :last-child {
+    margin-bottom: var(--spacing-0);
+  }
 
-blockquote > :last-child {
-  margin-bottom: var(--spacing-0);
-}
+  blockquote > ul,
+  blockquote > ol {
+    list-style-position: inside;
+  }
 
-blockquote > ul,
-blockquote > ol {
-  list-style-position: inside;
-}
+  table {
+    width: 100%;
+    margin-bottom: var(--spacing-8);
+    border-collapse: collapse;
+    border-spacing: 0.25rem;
+  }
 
-table {
-  width: 100%;
-  margin-bottom: var(--spacing-8);
-  border-collapse: collapse;
-  border-spacing: 0.25rem;
-}
+  table thead tr th {
+    border-bottom: 1px solid var(--color-accent);
+  }
 
-table thead tr th {
-  border-bottom: 1px solid var(--color-accent);
-}
+  /* Link */
 
-/* Link */
+  a {
+    color: var(--color-primary);
+  }
 
-a {
-  color: var(--color-primary);
-}
-
-a:hover,
-a:focus {
-  text-decoration: none;
+  a:hover,
+  a:focus {
+    text-decoration: none;
+  }
 }
 
 /* Custom classes */
 
-.global-wrapper {
+header#header {
+  @apply w-full flex flex-row justify-between border border-black;
+
+  .header-site {
+    @apply w-full flex flex-col md:flex-row justify-between;
+
+    .site-title-wrapper {
+      @apply px-4 py-2;
+    }
+    .site-title {
+      @apply px-4 py-2;
+      h1 {
+        @apply text-6xl text-center;
+      }
+    }
+
+    .quick-nav {
+      @apply px-4 py-2;
+      @apply flex flex-col items-center justify-center;
+      nav {
+        @apply flex flex-row items-start justify-between;
+        div {
+          @apply mx-2;
+        }
+      }
+    }
+  }
+
+  .header-language-selector {
+    @apply hidden sm:flex flex-col items-center justify-center border-l-2 px-4 py-2 w-32;
+    ul {
+      @apply flex flex-col items-center justify-center;
+      li {
+        @apply mx-2 my-1;
+      }
+    }
+  }
+}
+
+#subheader {
+  @apply w-full hidden xs:flex flex-row justify-between border border-black border-t-0;
+  > div {
+    @apply w-full flex flex-row justify-between;
+  }
+  .subheader-categories {
+    @apply w-full flex flex-row justify-center md:justify-between px-4 py-2;
+  }
+  .chip {
+    @apply text-sm font-medium;
+    &.child-chip {
+      @apply px-2.5 py-1;
+      &.child-chip-start {
+        @apply rounded-full rounded-e;
+      }
+      &.child-chip-middle {
+      }
+      &.child-chip-end {
+        @apply me-2 rounded-full rounded-s;
+      }
+    }
+    &.black-chip {
+      @apply bg-neutral-800 text-neutral-100;
+    }
+    &.parent-chip {
+      @apply ms-2 ps-2 pe-0 py-2;
+    }
+  }
+}
+
+.content-wrapper,
+footer {
   margin: var(--spacing-0) auto;
   max-width: var(--maxWidth-wrapper);
   padding: var(--spacing-10) var(--spacing-5);
 }
 
-.global-wrapper[data-is-root-path="true"] .bio {
+.content-wrapper[data-is-root-path="true"] .bio {
   margin-bottom: var(--spacing-20);
-}
-
-.global-header {
-  margin-bottom: var(--spacing-12);
 }
 
 .main-heading {
