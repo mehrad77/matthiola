@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "gatsby";
 import Header from "./header";
+import HeroSection from "./hero";
 
 interface LayoutProps {
   location: Location;
@@ -12,9 +13,11 @@ const Layout: React.FC<LayoutProps> = ({ location, title, children }) => {
   const rootPath = `/`;
   const isRootPath = location.pathname === rootPath;
   let header: React.ReactNode;
+  let hero: React.ReactNode;
 
   if (isRootPath) {
     header = <Header title={title} />;
+    hero = <HeroSection />;
   } else {
     header = (
       <Link className="header-link-home" to="/">
@@ -26,7 +29,11 @@ const Layout: React.FC<LayoutProps> = ({ location, title, children }) => {
   return (
     <div className="global-wrapper" data-is-root-path={isRootPath}>
       {header}
-      <main className="content-wrapper">{children}</main>
+
+      <main className="content-wrapper">
+        {hero}
+        {children}
+      </main>
       <footer>
         © {new Date().getFullYear()}, Built with
         {` `}
