@@ -292,32 +292,33 @@ header#header {
   .subheader-categories {
     @apply w-full flex flex-row justify-center md:justify-between px-4 py-2;
   }
-  .chip {
-    @apply text-sm font-medium;
-  }
+}
 
-  .child-chip {
-    @apply px-2.5 py-1;
-  }
+.chip {
+  @apply text-sm font-medium;
+}
 
-  .child-chip-start {
-    @apply rounded-full rounded-e;
-  }
+.child-chip {
+  @apply px-2.5 py-1;
+}
 
-  .child-chip-middle {
-  }
-  
-  .child-chip-end {
-    @apply me-2 rounded-full rounded-s;
-  }
+.child-chip-start {
+  @apply rounded-full rounded-e;
+}
 
-  .black-chip {
-    @apply bg-neutral-800 text-neutral-100;
-  }
+.child-chip-middle {
+}
 
-  .parent-chip {
-    @apply ms-2 ps-2 pe-0 py-2;
-  }
+.child-chip-end {
+  @apply me-2 rounded-full rounded-s;
+}
+
+.black-chip {
+  @apply bg-neutral-800 text-neutral-100;
+}
+
+.parent-chip {
+  @apply ms-2 ps-2 pe-0 py-2;
 }
 
 .content-wrapper,
