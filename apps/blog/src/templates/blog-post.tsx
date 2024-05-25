@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from "react";
 import { Link, graphql } from "gatsby";
 
@@ -10,21 +14,26 @@ interface BlogPostTemplateProps {
     previous: any;
     next: any;
     site: any;
-    markdownRemark: {
+    mdx: {
       frontmatter: {
         title: string;
         date: string;
+        description: string;
+        slug: string;
+        language: string;
       };
-      html: string;
+      body: string;
     };
   };
   location: any;
 }
 
 const BlogPostTemplate: React.FC<BlogPostTemplateProps> = ({
-  data: { previous, next, site, markdownRemark: post },
+  data: { previous, next, site, mdx: post },
   location,
 }) => {
+  console.log(`--=====> `, post);
+
   const siteTitle: string = site.siteMetadata?.title || `Title`;
 
   return (
@@ -39,7 +48,7 @@ const BlogPostTemplate: React.FC<BlogPostTemplateProps> = ({
           <p>{post.frontmatter.date}</p>
         </header>
         <section
-          dangerouslySetInnerHTML={{ __html: post.html }}
+          dangerouslySetInnerHTML={{ __html: post.body }}
           itemProp="articleBody"
         />
         <hr />
@@ -58,18 +67,18 @@ const BlogPostTemplate: React.FC<BlogPostTemplateProps> = ({
           }}
         >
           <li>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
+            {previous ? (
+              <Link to={previous.frontmatter.slug} rel="prev">
                 ← {previous.frontmatter.title}
               </Link>
-            )}
+            ) : null}
           </li>
           <li>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
+            {next ? (
+              <Link to={next.frontmatter.slug} rel="next">
                 {next.frontmatter.title} →
               </Link>
-            )}
+            ) : null}
           </li>
         </ul>
       </nav>
@@ -79,7 +88,7 @@ const BlogPostTemplate: React.FC<BlogPostTemplateProps> = ({
 
 interface HeadProps {
   data: {
-    markdownRemark: {
+    mdx: {
       frontmatter: {
         title: string;
         description: string;
@@ -89,9 +98,7 @@ interface HeadProps {
   };
 }
 
-export const Head: React.FC<HeadProps> = ({
-  data: { markdownRemark: post },
-}) => {
+export const Head: React.FC<HeadProps> = ({ data: { mdx: post } }) => {
   return (
     <Seo
       title={post.frontmatter.title}
@@ -113,29 +120,27 @@ export const pageQuery = graphql`
         title
       }
     }
-    markdownRemark(id: { eq: $id }) {
+    mdx(id: { eq: $id }) {
       id
       excerpt(pruneLength: 160)
-      html
+      body
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        slug
+        language
       }
     }
-    previous: markdownRemark(id: { eq: $previousPostId }) {
-      fields {
-        slug
-      }
+    previous: mdx(id: { eq: $previousPostId }) {
       frontmatter {
+        slug
         title
       }
     }
-    next: markdownRemark(id: { eq: $nextPostId }) {
-      fields {
-        slug
-      }
+    next: mdx(id: { eq: $nextPostId }) {
       frontmatter {
+        slug
         title
       }
     }

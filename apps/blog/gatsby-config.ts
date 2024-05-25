@@ -30,12 +30,25 @@ const config: GatsbyConfig = {
         modules: [`@repo/ui`],
       },
     },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+      },
+    },
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/blog`,
-        name: `blog`,
+        name: `en_blog`,
+        path: `${__dirname}/content/en/blog`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `fa_blog`,
+        path: `${__dirname}/content/fa/blog`,
       },
     },
     {
@@ -65,65 +78,79 @@ const config: GatsbyConfig = {
         ],
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     {
-      resolve: `gatsby-plugin-feed`,
+      resolve: `gatsby-plugin-react-i18next`,
       options: {
-        query: `
-          {
-            site {
-              siteMetadata {
-                title
-                description
-                siteUrl
-                site_url: siteUrl
-              }
-            }
-          }
-        `,
-        feeds: [
-          {
-            serialize: ({
-              query: { site, allMarkdownRemark },
-            }: {
-              query: {
-                site: Record<string, any>;
-                allMarkdownRemark: { nodes: Record<string, any>[] };
-              };
-            }) => {
-              return allMarkdownRemark.nodes.map(node => {
-                return {
-                  ...node.frontmatter,
-                  description: node.excerpt,
-                  date: node.frontmatter.date,
-                  url: site.siteMetadata.siteUrl + node.fields.slug,
-                  guid: site.siteMetadata.siteUrl + node.fields.slug,
-                  custom_elements: [{ "content:encoded": node.html }],
-                };
-              });
-            },
-            query: `{
-              allMarkdownRemark(sort: {frontmatter: {date: DESC}}) {
-                nodes {
-                  excerpt
-                  html
-                  fields {
-                    slug
-                  }
-                  frontmatter {
-                    title
-                    date
-                  }
-                }
-              }
-            }`,
-            output: "/rss.xml",
-            title: "Shab Boo RSS Feed",
+        localeJsonSourceName: `locale`, // Name of the source plugin (default value)
+        languages: [`en`, `fa`],
+        defaultLanguage: `en`,
+        siteUrl: `https://shab.boo`,
+        i18nextOptions: {
+          interpolation: {
+            escapeValue: false, // not needed for react as it escapes by default
           },
-        ],
+        },
       },
     },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    // {
+    //   resolve: `gatsby-plugin-feed`,
+    //   options: {
+    //     query: `
+    //       {
+    //         site {
+    //           siteMetadata {
+    //             title
+    //             description
+    //             siteUrl
+    //             site_url: siteUrl
+    //           }
+    //         }
+    //       }
+    //     `,
+    //     feeds: [
+    //       {
+    //         serialize: ({
+    //           query: { site, allMarkdownRemark },
+    //         }: {
+    //           query: {
+    //             site: Record<string, any>;
+    //             allMarkdownRemark: { nodes: Record<string, any>[] };
+    //           };
+    //         }) => {
+    //           return allMarkdownRemark.nodes.map(node => {
+    //             return {
+    //               ...node.frontmatter,
+    //               description: node.excerpt,
+    //               date: node.frontmatter.date,
+    //               url: site.siteMetadata.siteUrl + node.fields.slug,
+    //               guid: site.siteMetadata.siteUrl + node.fields.slug,
+    //               custom_elements: [{ "content:encoded": node.html }],
+    //             };
+    //           });
+    //         },
+    //         query: `{
+    //           allMarkdownRemark(sort: {frontmatter: {date: DESC}}) {
+    //             nodes {
+    //               excerpt
+    //               html
+    //               fields {
+    //                 slug
+    //               }
+    //               frontmatter {
+    //                 title
+    //                 date
+    //               }
+    //             }
+    //           }
+    //         }`,
+    //         output: "/rss.xml",
+    //         title: "Shab Boo RSS Feed",
+    //       },
+    //     ],
+    //   },
+    // },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

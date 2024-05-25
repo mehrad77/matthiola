@@ -1,5 +1,7 @@
 ---
 title: My Second Post!
+language: "en"
+slug: "my-second-post"
 date: "2015-05-06T23:46:37.121Z"
 ---
 

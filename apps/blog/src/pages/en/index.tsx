@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -5,14 +6,16 @@
 import * as React from "react";
 import { Link, graphql } from "gatsby";
 // import { Button } from "@repo/ui/button";
-import Bio from "../components/bio";
-import Layout from "../components/layout";
-import Seo from "../components/seo";
+import Bio from "../../components/bio";
+import Layout from "../../components/layout";
+import Seo from "../../components/seo";
 
 const BlogIndex = ({ data, location }: Record<string, any>) => {
+  console.log(`=======BlogIndex data`, data);
   const siteTitle = data.site.siteMetadata?.title || `Title`;
-  const posts = data.allMarkdownRemark.nodes;
+  const posts = data.allMdx.nodes ?? [];
 
+  console.log(`======= Length of posts`, posts.length);
   if (posts.length === 0) {
     return (
       <Layout location={location} title={siteTitle}>
@@ -30,10 +33,13 @@ const BlogIndex = ({ data, location }: Record<string, any>) => {
     <Layout location={location} title={siteTitle}>
       <ol style={{ listStyle: `none` }}>
         {posts?.map((post: any) => {
-          const title = post.frontmatter.title || post.fields.slug;
-
+          const { frontmatter } = post;
+          const title = frontmatter.title || frontmatter.slug;
+          const link = `blog/${frontmatter.slug}`;
+          console.log(`=======frontmatter`, frontmatter);
+          console.log(`URL =>`, link);
           return (
-            <li key={post.fields.slug}>
+            <li key={frontmatter.slug}>
               <article
                 className="post-list-item"
                 itemScope
@@ -41,16 +47,16 @@ const BlogIndex = ({ data, location }: Record<string, any>) => {
               >
                 <header>
                   <h2>
-                    <Link to={post.fields.slug} itemProp="url">
+                    <Link to={link} itemProp="url">
                       <span itemProp="headline">{title}</span>
                     </Link>
                   </h2>
-                  <small>{post.frontmatter.date}</small>
+                  <small>{frontmatter.date}</small>
                 </header>
                 <section>
                   <p
                     dangerouslySetInnerHTML={{
-                      __html: post.frontmatter.description || post.excerpt,
+                      __html: frontmatter.description || post.excerpt,
                     }}
                     itemProp="description"
                   />
@@ -84,15 +90,14 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+    allMdx(sort: { frontmatter: { date: DESC } }) {
       nodes {
         excerpt
-        fields {
-          slug
-        }
         frontmatter {
           date(formatString: "MMMM DD, YYYY")
           title
+          slug
+          language
           description
         }
       }

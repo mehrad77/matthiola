@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import path from "node:path";
 import type {
   GatsbyNode,
@@ -24,18 +25,35 @@ export const createPages: GatsbyNode["createPages"] = async ({
   actions,
   reporter,
 }: CreatePagesArgs) => {
-  const { createPage } = actions;
+  const { createPage, createRedirect } = actions;
 
-  // Get all markdown blog posts sorted by date
+  // ## New Method
   const result = await graphql<{
-    allMarkdownRemark: { nodes: { id: string; fields: { slug: string } }[] };
+    allMdx: {
+      nodes: {
+        id: string;
+        excerpt: string;
+        frontmatter: {
+          date: string;
+          title: string;
+          slug: string;
+          description: string;
+          language: string;
+        };
+      }[];
+    };
   }>(`
     {
-      allMarkdownRemark(sort: { frontmatter: { date: ASC } }, limit: 1000) {
+      allMdx(sort: { frontmatter: { date: DESC } }) {
         nodes {
           id
-          fields {
+          excerpt
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
             slug
+            description
+            language
           }
         }
       }
@@ -50,26 +68,36 @@ export const createPages: GatsbyNode["createPages"] = async ({
     return;
   }
 
-  const posts = result.data?.allMarkdownRemark.nodes ?? [];
+  const posts = result.data?.allMdx.nodes ?? [];
 
   // Create blog posts pages
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
   // `context` is available in the template as a prop and as a variable in GraphQL
+  console.log(`===Creating ${posts.length} blog posts`);
+
   if (posts.length > 0) {
-    posts.forEach((post, index) => {
+    posts.forEach(({ frontmatter: { slug, language }, id }, index) => {
       const previousPostId = index === 0 ? null : posts[index - 1].id;
       const nextPostId =
         index === posts.length - 1 ? null : posts[index + 1].id;
 
       createPage({
-        path: post.fields.slug,
+        path: `/${language}/blog/${slug}`,
         component: blogPost,
         context: {
-          id: post.id,
+          id,
           previousPostId,
           nextPostId,
         },
       });
+    });
+
+    // Redirect root to /en
+    createRedirect({
+      fromPath: "/",
+      toPath: "/en",
+      isPermanent: true,
+      redirectInBrowser: true,
     });
   }
 };
