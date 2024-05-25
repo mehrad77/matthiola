@@ -11,7 +11,8 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ location, title, children }) => {
   const rootPath = `/en`;
-  const isRootPath = location.pathname === rootPath;
+  const isRootPath =
+    location.pathname === rootPath || location.pathname === `${rootPath}/`;
   let header: React.ReactNode;
   let hero: React.ReactNode;
 
