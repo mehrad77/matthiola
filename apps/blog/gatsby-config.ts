@@ -44,13 +44,13 @@ const config: GatsbyConfig = {
         path: `${__dirname}/content/en/blog`,
       },
     },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `fa_blog`,
-        path: `${__dirname}/content/fa/blog`,
-      },
-    },
+    // {
+    //   resolve: `gatsby-source-filesystem`,
+    //   options: {
+    //     name: `fa_blog`,
+    //     path: `${__dirname}/content/fa/blog`,
+    //   },
+    // },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
