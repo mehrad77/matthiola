@@ -6,9 +6,9 @@
 import * as React from "react";
 import { Link, graphql } from "gatsby";
 // import { Button } from "@repo/ui/button";
-import Bio from "../../components/bio";
-import Layout from "../../components/layout";
-import Seo from "../../components/seo";
+import Bio from "../components/bio";
+import Layout from "../components/layout";
+import Seo from "../components/seo";
 
 const BlogIndex = ({ data, location }: Record<string, any>) => {
   console.log(`=======BlogIndex data`, data);
@@ -84,7 +84,7 @@ export default BlogIndex;
 export const Head = () => <Seo title="All posts" />;
 
 export const pageQuery = graphql`
-  {
+  query ($language: String!) {
     site {
       siteMetadata {
         title
@@ -99,6 +99,15 @@ export const pageQuery = graphql`
           slug
           language
           description
+        }
+      }
+    }
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          ns
+          data
+          language
         }
       }
     }

@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-no-leaked-render */
 import React from "react";
 import { Link } from "gatsby";
+import { useI18next } from "gatsby-plugin-react-i18next";
 
 interface HeaderProps {
   title: string;
@@ -9,6 +10,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ title, hasSubHeading = true }) => {
+  const { languages, changeLanguage } = useI18next();
+
   return (
     <>
       <header id="header">
@@ -34,12 +37,20 @@ const Header: React.FC<HeaderProps> = ({ title, hasSubHeading = true }) => {
         </div>
         <div className="header-language-selector">
           <ul>
-            <li>
-              <a href="#">fa</a>
-            </li>
-            <li>
-              <a href="#">en</a>
-            </li>
+            {languages.map(lng => (
+              <li key={lng}>
+                <a
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
+                    console.log(`Changing language to ${lng}`); // eslint-disable-line no-console
+                    void changeLanguage(lng);
+                  }}
+                >
+                  {lng}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </header>

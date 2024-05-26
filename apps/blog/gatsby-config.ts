@@ -79,17 +79,38 @@ const config: GatsbyConfig = {
       },
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/locales`,
+        name: `locale`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-react-i18next`,
       options: {
         localeJsonSourceName: `locale`, // Name of the source plugin (default value)
         languages: [`en`, `fa`],
         defaultLanguage: `en`,
         siteUrl: `https://shab.boo`,
+        trailingSlash: "always",
         i18nextOptions: {
           interpolation: {
             escapeValue: false, // not needed for react as it escapes by default
           },
+          keySeparator: false,
         },
+        generateDefaultLanguagePage: true,
+        pages: [
+          {
+            matchPath: "/:lang?/blog/:uid",
+            getLanguageFromPath: true,
+            excludeLanguages: ["es"],
+          },
+          {
+            matchPath: "/",
+            languages: ["en", "fa"],
+          },
+        ],
       },
     },
     `gatsby-transformer-sharp`,
